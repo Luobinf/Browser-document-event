@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>innerHTML</title>
+</head>
+<body><!-- hah -->
+    <p>
+        hello china!
+    </p>
+    <div><p>nihao</p></div>
+    <!-- innerHTML允许将元素中的HTML作为字符串来获取。我们也可以修改它。因此，这是改变页面最有效的方法之一。 -->
+    <script>
+        let content = document.querySelector('p')
+        console.log(content.innerHTML)  //"hello china!"
+        let divContent = document.querySelector('div')
+        console.log(divContent.innerHTML)   //" <p>nihao</p>"
+        console.log(divContent.innerText)   //nihao
+        console.log(divContent.outerHTML)   //"<div><p>nihao</p></div>"
+        
+        // textContent:纯文本。textContent 提供对元素中的 text 的访问权限：只提供文本，去掉所有的标签。
+    </script>
+</body>
+</html>

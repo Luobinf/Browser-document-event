@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节点属性</title>
+</head>
+
+<body><!-- 注释 -->
+    <script>
+        // 一。body元素继承自HTMLBodyElement类
+        console.log(document.body.constructor.name)  //HTMLBodyElement
+        alert(document.body)
+
+        // 二。我们还可以使用 instanceof 来检查继承：
+        // alert(document.body instanceof HTMLBodyElement); // true
+        // alert(document.body instanceof HTMLElement); // true
+        // alert(document.body instanceof Element); // true
+        // alert(document.body instanceof Node); // true
+        // alert(document.body instanceof EventTarget); // true
+
+        // 三。正如我们所看到的，DOM 节点是规则的 JavaScript 对象。它们使用基于原型的类来继承。
+
+        // 四。nodeType 属性提供了一个获取 DOM 节点类型的旧方法。
+        //1.elem.nodeType == 1 是元素节点
+        //2.elem.nodeType == 3 是文本节点
+        //3.elem.nodeType == 9 是 document 对象
+        //4.elem.nodeType == 8 是 comment(注释)节点
+        //在规范中几乎没有其他值。
+        //例如：
+        let body = document.body
+        console.log(body.nodeType)  //1
+        console.log(body.firstChild.nodeType)  //8
+        console.log(document.nodeType)  //9
+        //在现代脚本中，我们可以使用 instanceof 和其他基于类的测试来查看节点类型，但有时 nodeType 可能会更简单。
+        //我们只能读取 nodeType 而不能修改它。
+
+        //五.nodeName和tagName
+        console.log(document.body.firstChild.nodeName)  //#comment 表示注释节点
+        console.log(document.body.firstChild.tagName)   //undefined 表示每天有找到元素节点
+
+        console.log(document.body.nodeName) //"BODY"
+        console.log(document.nodeName)  //#document
+        console.log(document.tagName)   //undefined  因为document不是一个元素节点，所以显示出undefined
+
+        //注意:在 HTML 模式中，tagName/nodeName 总是大写的：它是 BODY，而不是 <body> 或 <BoDy>。
+        //如果我们只处理元素，那么 tagName 是我们唯一应该使用的。
+    </script>
+</body>
+
+</html>

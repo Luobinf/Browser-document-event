@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>getElement* and querySelector*</title>
 </head>
+
 <body>
     <!-- 当元素关联较密切时，DOM 导航属性是最好的。万一不是这样该怎么办？如何去获取页面上的任意一个元素？ -->
 
-    
+    <!-- 1.document.getelementById或者只使用id  如果元素有 id 属性，那么该 id 也会有一个同名全局变量。 -->
+    <!-- 我们可以用以下方式访问元素: -->
+
+    <div id="elem">
+        <div id="elem-content">Element</div>
+    </div>
+
+    <script>
+        console.log(elem); // DOM-element with id="elem"
+        console.log(window.elem); // accessing global variable like this also works
+
+        // 对于 elem-content 会稍微有些复杂
+        // 因为里面有破折号，所以不是一个变量名
+        console.log(window['elem-content']); // ...但可以使用方括号 [...]
+
+        // 但是最好使用document.getElementById来获取元素
+        let ele = document.getElementById('elem')
+        ele.style.backgroundColor = 'red'
+        console.log(ele.style.backgroundColor)
+        // 注意：getElementById 只能在 document 对象上调用。它会在整个文档中查找给定的 id。
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>querySelector*</title>
+</head>
+
+<body>
+
+    <!-- 1.elem.querySelectorAll(css) 的调用将返回与给定 CSS 选择器匹配 elem 中的所有元素。这是最常用和最有力的方法。 -->
+    <ul>
+        <li>The</li>
+        <li>test</li>
+    </ul>
+    <ul>
+        <li>has</li>
+        <li>passed</li>
+    </ul>
+
+    <!-- 2.elem.querySelector -->
+    <!-- 调用 elem.querySelector(css) 后，它会返回给定 CSS 选择器的第一个元素。 -->
+    <!-- 换句话说，结果与 elem.querySelectorAll(css)[0] 相同，但是后者会从所有找到的元素中选取一个， -->
+    <!-- 而 elem.querySelector 只会查找一个。因此编写会更快更简洁。 -->
+    <script>
+
+        let elems = document.querySelectorAll('ul > li:first-child')
+        for (let elem of elems) {
+            console.log(elem.innerText)  //"The","has"
+        }
+
+
+    </script>
+</body>
+
+</html>

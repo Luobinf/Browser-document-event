@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>getElement* and querySelector*</title>
+</head>
+
+<body>
+   
+    <!-- getElementsBy*来获取对应的元素(节点) -->
+    <!-- elem.getElementsByTagName(tag) 用给定的标签来查找元素，并返回它们的集合。tag 参数可以是“任何标签”。 -->
+    <!-- elem.getElementsByClassName()与上述类似-->
+    
+    <div id="elem">
+        <div id="elem-content">Element</div>
+    </div>
+    <script>
+   
+        let div = document.getElementsByTagName('div')
+        console.log(div)  //这里获取到的是集合
+        console.log(div[1])  //将会获取到<div id="elem-content">Element</div>
+
+        // 1.初级开发者会忽略字符 "s"。也就是说，它们会调用 getElementByTagName 而不是 getElementsByTagName。
+        // 2."s" 字符并不存在于 getElementById，因为它只返回单个元素。但是 getElementsByTagName 返回的是一个元素集合，所以 "s" 包含在内。
+    </script>
+</body>
+
+</html>
