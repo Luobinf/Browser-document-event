@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>遍历DOM</title>
+</head>
+<body>
+    <div class="title">
+        <!-- haha我是注释节点 -->
+        <p>
+            hello
+        </p>
+    </div>
+    <script>
+        //一.获取子元素：childNodes、firstChild、lastChild
+        // oTitle.childNodes得到的是一个类数组对象
+        // 1.childNodes 集合提供了对所有子节点包括其中文本节点的访问。
+        //2.firstChild 和 lastChild 属性是访问第一个和最后一个子元素的快捷方式
+        let oTitle = document.getElementsByClassName('title')[0]
+        console.log(oTitle.childNodes) //[text, comment, text, p, text] 得到的是一个类数组对象
+        console.log(oTitle.childNodes instanceof Array)  //false
+
+        // for (let i of oTitle.childNodes) {
+        //     console.log(i)
+        // }
+        console.log(oTitle.firstChild) //得到节点(元素)的第一个子节点:文本节点 #text
+        console.log(oTitle.lastChild)  //得到节点(元素)的最后一个子节点 #text
+        console.log(oTitle.children)
+
+        //二.获取兄弟节点和父节点 previousSibling、nextSibling parentNode
+        //2.1兄弟节点是指有同一个父节点的节点，例如<head>和<body>就是兄弟节点;父节点可以通过parentNode来访问
+        console.log(oTitle.parentNode)  //返回body节点
+        console.log(document.body.previousSibling) //返回文本节点#text
+        console.log(document.body.nextSibling) //返回的是null
+
+        //三.事实上以上所有属性都会涉及到所有节点，例如childNodes会得到所有子节点，包括元素节点、文本节点，甚至是注释节点。
+        //但是有时候我们不想要那些文本节点、注释节点什么的，怎么办？那就用类似parentElement等，具体看图。
+
+        //3.1children只获取类型为元素节点的子节点...
+    </script>
+</body>
+</html>
