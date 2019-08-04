@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>innerHTML</title>
+    <title>innerHTML outerHTML textContext hidden属性</title>
 </head>
 <body><!-- hah -->
     <p>
-        hello china!
+        <span>hello china!</span>
+        <span>haha</span>
     </p>
     <div><p>nihao</p></div>
     <!-- innerHTML允许将元素中的HTML作为字符串来获取。我们也可以修改它。因此，这是改变页面最有效的方法之一。 -->
     <script>
         let content = document.querySelector('p')
+        content.hidden = true
         console.log(content.innerHTML)  //"hello china!"
         let divContent = document.querySelector('div')
         console.log(divContent.innerHTML)   //" <p>nihao</p>"
@@ -21,6 +23,25 @@
         console.log(divContent.outerHTML)   //"<div><p>nihao</p></div>"
         
         // textContent:纯文本。textContent 提供对元素中的 text 的访问权限：只提供文本，去掉所有的标签。
+        // textContent和innerText是浏览器实现的，不是html的标准，所以会有兼容性的问题。
+        //innerText和textContent的作用都是获取元素之间的文本内容，但是他们的表现确是不同的。
+
+        //注意：1.innerText的值依赖于浏览器的显示，textContent依赖于代码的显示。
+        //     2.如果一个元素之间包含了script标签或者style标签，innerText是获取不到两个元素之间的文本的，而textContent可以
+
+        // 与innerText的区别：
+        // 1.textContent会获取所有元素的content，包括<script>和<style>元素
+        // 2.innerText不会获取hidden元素的content，而textContent会
+        // 3.innerText会触发reflow，而textContent不会
+        // 4.innerText返回值会被格式化，而textContent不会
+        console.log(content.textContent) //去浏览器中看，可以显示两个元素之间的文本，而innerText不会显示
+        console.log(content.innerText)  //hello china! haha
+
+        // 以上，由于innerText会触发回流，会影响性能，故最好使用textContent属性
+
+        //hidden属性：
+        //hidden属性指定元素是否可见
+        // content.hidden = true
     </script>
 </body>
 </html>

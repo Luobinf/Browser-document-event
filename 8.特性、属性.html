@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Attributes and properties</title>
+</head>
+
+<body>
+    <!-- 1.当浏览器加载页面时，它会“读取”（或者称之为：“解析”）HTML 文本并生成 DOM 对象。
+        对于元素节点，大多数 HTML 特性会自动变成 DOM 对象的属性。 -->
+    <!-- 2.我们已经见过内置的 DOM 属性了。它的数量很庞大，但是 DOM 技术实现上没有限制我们对这个对象进行添加, 
+             —— 如果我们需要额外的属性的话-->
+    <!-- 3.DOM 节点是一个标准的 JavaScript 对象。我们可以打印它。 -->
+    <div id="elem">
+        hello china
+    </div>
+    <a href="#123" id="a">baidu</a>
+    <div data-name="name" data-title="title" id="box">name,title</div>
+    <script>
+        let body = document.body
+        body.myDate = {
+            name: 'body',
+            title: 'article'
+        }
+        console.log(body.myDate.title)  //"article"
+        //1.我们还可以修改内置属性的原型，比如修改 Element.prototype 会给所有元素添加一个方法：
+        Element.prototype.sayName = function () {
+            console.log(`${this.nodeName}`)
+        }
+        body.sayName()  //'BODY'
+
+        //综上所述：DOM上的属性和方法就是一个标准的js对象。它可以有很多值，它是大小写敏感的。
+        
+        //2.
+        let elem = document.querySelector('#elem')
+        console.log(elem.outerHTML)
+
+        console.log(elem.getAttribute('id'))    //"elem"
+        elem.setAttribute('class','welcome')
+        console.log(elem.hasAttribute('title')) //false
+
+        //3.注意：使用getAttribute来获取值总是是相对路径的，而a.href的结果则总是绝对路径
+        console.log(a.getAttribute('href')) //"#123"
+        console.log(a.href) //file:///C:/Users/%E9%AA%86%E6%96%8C/Desktop/local/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6%E5%92%8C%E6%8E%A5%E5%8F%A3/8.%E7%89%B9%E6%80%A7%E3%80%81%E5%B1%9E%E6%80%A7.html#123
+   
+        //4.非标准化attributes,所有以 “data-” 开头的特性值可以给编程人员正常使用，同时它还是 dataset 合法值。
+        //例如, 如果一个 elem 有一个键名是 "data-about" 的特性，那么可以通过 elem.dataset.about 取到这个合法值。
+        //例如:
+        console.log(box.dataset.title)  //"title"
+        console.log(box.dataset.name)   //"name"
+    </script>
+</body>
+
+</html>
