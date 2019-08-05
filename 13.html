@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>将指定的标签插入列表</title>
+</head>
+
+<body>
+    <ul id="ul">
+        <li id="one">1</li>
+        <li id="two">4</li>
+    </ul>
+
+    <script>
+        let ul = document.querySelector('#ul')
+        let li1 = document.createElement('li')
+        let li2 = document.createElement('li')
+        li1.textContent = 2
+        li2.textContent = 3
+        ul.children[0].after(li1)
+        ul.lastElementChild.before(li2)
+    </script>
+</body>
+
+</html>

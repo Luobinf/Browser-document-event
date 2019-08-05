@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>样式和类</title>
+    <style>
+        main {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            position: relative;
+            color: skyblue;
+        }
+
+        .notification {
+            position: absolute;
+            width: 100px;
+            height: 60px;
+            border: 1px solid red;
+        }
+        .show{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main page">
+        hello
+    </main>
+    <div class="notification"></div>
+    <script>
+        //一。className和classList
+        //如果我们为 elem.className 分配一些东西，它将替换所有的类字符串。有时，这正是我们所需要的，
+        //但我们通常希望添加/删除单个类。
+        //elem.classList是一个特殊的对象,它拥有add/remove/toggle的类方法。
+        let main = document.getElementsByTagName('main')[0]
+        console.log(main.className) //main page
+        console.log(main.classList) //DOMTokenList(2) ["main", "page", value: "main page"]
+        //例如可以使用classList的add来添加类名，remove来删除某一个类名
+        main.classList.add('title')
+        main.classList.remove('main')
+
+        //综上：因此我们既可以使用 className 对完整的类字符串进行操作，也可以使用使用 classList 对单个类进行操作。
+        //我们选择什么取决于我们的需求。
+
+        //classList方法:
+        //1.elem.classList.add/remove("class") —— 添加/移除类。
+        //2.elem.classList.toggle("class") —— 如果类存在就移除，否则添加。
+        //3.elem.classList.contains("class") —— 返回 true/false，检查给定类。
+        console.log(main.style) //是一个对象
+        console.log(main.style.color)   //获取不到，因为没有直接写在style对象中
+
+        //二.元素样式
+        //elem.style 属性是一个对象，它对应于 "style" 特性中所写的内容。
+        //对 elem.style.width="100px" 等价于 style="width:100px" 的运行效果。
+
+        //注意：若你的样式不是在style中写的话，那么你获取的时候是获取不到的。
+        main.style.left = '10%'
+
+        //三.计算样式:getComputedStyle
+        //修改样式很简单，但是如何读取它呢？
+        //例如，我们想知道元素的大小、边距、颜色。应该怎么获取？
+        //style 属性仅对 "style" 属性值进行操作，而不是任何 CSS 级联。
+        //因此我们不能使用 elem.style 来读取来自 CSS 类的任何内容。
+
+        //可以使用getComputedStyle(element[, pseudo]) element是用来读取样式值的元素
+        //pseudo：假如给定一个伪元素，例如：::before。空字符串或无参意味着元素本身。
+        //结果是一个具有样式属性的对象，像elem.style
+        let computedStyle = getComputedStyle(main)
+        console.log(computedStyle)  //返回与 style 对象类似且包含了所有属性的对象，是只读的。
+        console.log(computedStyle.left)
+
+        //练习:编写 showNotification(options) 通知函数：<div class="notification"> 包含给定内容。
+        //通知应该在1.5s后消失，再显示。消失再显示，中间间隔为1.5s。
+        let notification = document.querySelector('.notification')
+        function showNotification(options) {
+            notification.style.top = options.top + 'px'
+            notification.style.right = options.right + 'px'
+            notification.innerHTML = options.html
+            notification.classList.add(options.className)
+        }
+        showNotification({
+            top: 10, // 10px from the top of the window (by default 0px)
+            right: 10, // 10px from the right edge of the window (by default 0px)
+            html: "Hello!", // the HTML of notification
+            className: "welcome" // an additional class for the div (optional)
+        })
+        setInterval(() => {
+            if (! notification.classList.contains('show')) {
+                notification.classList.add('show')
+            } else {
+                notification.classList.remove('show')
+            }
+        }, 1500);
+
+    </script>
+</body>
+
+</html>
