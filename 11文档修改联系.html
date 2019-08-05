@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ol id="elem">
+        <li>Hello</li>
+        <li>World</li>
+    </ol>
+    <script>
+        // 1.删除ol下面的所有儿子节点(包括文本节点)
+        let elem = document.querySelector('#elem')
+        function clear(elem) {
+            while (elem.firstChild) {
+                elem.firstChild.remove()
+            }
+        }
+        clear(elem)
+
+        // 2.编写一个接口，根据用户输入创建一个列表。直到用户输入取消指令（按下 Esc 或者 prompt 的 CANCEL）。
+        // let ul = document.createElement('ul')
+        // while (true) {
+        //     let message = prompt("请输入内容:")
+        //     if (!message) {
+        //         break
+        //     }
+        //     let li = document.createElement('li')
+        //     li.textContent = message
+        //     ul.append(li)
+        //     elem.after(ul)
+        // }
+
+        // 3.利用对象创建节点树
+        // 编写一个函数 createTree 将嵌套的对象生成 ul/li 的嵌套列表。
+        let data = {
+            "Fish": {
+                "trout": {},
+                "salmon": {}
+            },
+
+            "Tree": {
+                "Huge": {
+                    "sequoia": {},
+                    "oak": {}
+                },
+                "Flowering": {
+                    "apple tree": {},
+                    "magnolia": {}
+                }
+            }
+        }
+        let container = document.createElement('div')
+        function createTree(data) {
+            // if there's no children, then the call returns undefined
+            // and the <ul> won't be created
+            if (!Object.keys(data).length) { return }
+            let ul = document.createElement('ul')
+            for (let key in data) {
+                let li = document.createElement('li')
+                li.textContent = key
+                let childrenUl = createTree(data[key])
+                // console.log(childrenUl)
+                if (childrenUl) {
+                    li.append(childrenUl)
+                
+                }
+                ul.append(li)
+            }
+            return ul
+        }
+        container.append(createTree(data))
+        elem.after(container)
+
+        //4.创建一个彩色时钟 详见第12个文档
+        let date = new Date()
+        console.log(date)
+    </script>
+</body>
+
+</html>

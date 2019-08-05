@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建一个彩色时钟</title>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .clock {
+            width: 150px;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <span id="hour" class="red"></span>
+        <span id="minute" class="green"></span>
+        <span id="second" class="blue"></span>
+    </div>
+    <script>
+        function update() {
+            let clock = document.querySelector('.clock')
+            let date = new Date()
+            let hours = date.getHours()
+            let minutes = date.getMinutes()
+            let seconds = date.getSeconds()
+            // console.log(date.getDay()) 获取星期几
+            if (hours < 10) {
+                hours = "0" + hours + ":"
+            } else {
+                hours = hours + ":"
+            }
+            clock.children[0].textContent = hours;
+
+            if (minutes < 10) {
+                minutes = "0" + minutes + ":"
+            } else {
+                minutes = minutes + ":"
+            }
+            clock.children[1].textContent = minutes;
+
+            if (seconds < 10) {
+                seconds = "0" + seconds
+            } else {
+                seconds = seconds
+            }
+            clock.children[2].textContent = seconds;
+        }
+        
+        function createClock () {
+            update() //*
+            setInterval(update, 1000);
+        }
+        createClock()
+
+        //注意:update(),它不单在createClock()被间隔器调用，也会在 (*) 立即调用一次.
+        //如果不是这样，只有在 setInterval 第一次执行周期时，才能看到时钟，在此之前时钟一直都是空的。
+    </script>
+</body>
+
+</html>

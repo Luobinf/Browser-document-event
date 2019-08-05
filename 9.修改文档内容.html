@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改文档内容</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+    <div class="first">first</div>
+    <div class="second">second</div>
+    <!-- DOM（document object model 文档对象模型，此文中全部以缩写 DOM 表示）的可修改性是网页能“实时”刷新的关键。 -->
+    <script>
+        //1.创建一个元素节点用document.createElement(tag),创建一个文本节点用document.createTextNode（text）
+        let body = document.body
+        let div = document.createElement('div')
+        let textNode = document.createTextNode('hello china!!!')
+        div.appendChild(textNode)
+        body.appendChild(div)
+        
+        //2.给元素添加类名className
+        div.className = 'welcome'
+
+        //3.将元素插入到父元素中可以使用parentElem.appendChild()方法
+        //4.parentElem.insertBefore(node, nextSibling)。在 parentElem 的 nextSibling 插入 node。
+        let newDiv = document.createElement('div')
+        newDiv.textContent = 'lb'
+        body.insertBefore(newDiv,div)   //表示在父元素body下面，将newDiv插入到div的前面
+
+        //5.替换节点 parentElem.replaceChild(node, oldChild)
+
+        //综上：parentElem.appendChild()、parentElem.insertBefore(node, nextSibling)、
+        //parentElem.replaceChild(node, oldChild)这三种方法都是‘旧三板斧’。
+
+        //6.以上几种方法都需要引用父节点才能插入?那如何不引用父节点插入呢，几种优雅的插入方法：在开头插入/在末尾插入/在前面插入/在后面插入
+        //6.1 node.append(...nodes or strings) —— 在 node 末尾插入节点或者字符串
+        //6.2 node.prepend(...nodes or strings) —— 在 node 开头插入节点或者字符串，
+        //6.3 node.before(...nodes or strings) —— 在 node 前面插入节点或者字符串，
+        //6.4 node.after(...nodes or strings) —— 在 node 后面插入节点或者字符串，
+        //6.5 node.replaceWith(...nodes or strings) —— 将 node 替换为节点或者字符串。
+        
+        //以上这些方法都接受DOM节点或者文本字符串列表形式。如果给定的是一个字符串，那么它将以文本节点（text node）形式插入。
+        
+        //例如: 以上这些方法都支持多个节点的插入
+        let ul = document.querySelector('ul')
+        let newLi = document.createElement('li')
+        newLi.textContent = 'new li'
+        ul.before('before')
+        ul.after('after')
+        ul.append(newLi)
+        ul.prepend('haha',newLi)
+        
+        //如果我们想在 HTML 页面中插入一个标签，有没有这样的方法，就像调用 elem.innerHTML 方法一样？
+        //7.接下来登场的这个方法就可以做到：elem.insertAdjacentHTML(where, html)。
+        //具体看https://zh.javascript.info/modifying-document#ke-long-jie-dian-clonenode
+
+
+        //8.克隆节点：cloneNode()  怎么插入多条相同的信息? 我们可以声明一个函数来实现这个方法。
+        //但是怎样通过克隆的方式来替换掉那些原本存在的 div 并且更改里面的文本（如果有这样一个需求）
+        //elem.cloneNode(true) 方法用来对一个元素进行“深”克隆 —— 包括所有特性和子元素，
+        //elem.cloneNode(false) 方法只克隆该元素本身，不对子元素进行克隆。
+        let ul2 = ul.cloneNode(true)
+        ul.after(ul2)   //显示克隆信息在已经存在的div后
+
+
+        //9.移除元素
+        //想要移除节点，可以通过以下方法：
+        //parentElem.removeChild(node) 从 parentElem 中移除 node（假设它是元素中的子元素）。
+        //node.remove() 从当前位置移除node。
+        //注意：如果我们想要移动一个元素到另一个地方 —— 不需要移除旧的元素。所有插入操作都会从节点原来的位置把节点移除掉。
+        //例如:
+        let firstDiv = document.querySelector('.first')
+        let secondDiv = document.querySelector('.second')
+        secondDiv.after(firstDiv)
+
+        //10.聊一聊document.write  注意：该方法只能在页面加载的时会调用，如果加载完成以后，渲染好的页面
+        //会被擦除。
+        //document.write是一个很老的方法，用来为web页面添加内容。
+        //document.write('<b>Hello from JS</b>')
+        //调动 document.write(html) 时意味着将 html “就地并马上”放入到页面中。
+        //这个方法的起源于没有 DOM，没有 Web 标准的上古时期……，但是这个方法依旧保留了下来，因为很多的脚本使用它来实现一些功能。
+        setTimeout(function () {
+            document.write('<b>Hello from JS</b>') //可以看到页面会被擦除
+        },1000)
+    </script>
+                                                                         
+</body>
+</html>
