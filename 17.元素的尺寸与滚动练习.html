@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 2000px;
+            background-color: skyblue;
+        }
+        #example {
+            width: 300px;
+            height: 200px;
+            border: 25px solid #E8C48F;
+            padding: 20px;
+            overflow: auto;
+            margin-left: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="example">
+        <h3>Introduction</h3>
+        <p>This Ecma Standard is based on several originating technologies, the most well known being JavaScript
+            (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared
+            in that company's Navigator 2.0 browser.
+            It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with
+            Internet Explorer 3.0. The development of this Standard started in November 1996. The first edition of this
+            Ecma Standard was adopted by the
+            Ecma General Assembly of June 1997.</p>
+
+        <p>That Ecma Standard was submitted to ISO/IEC JTC 1 for adoption under the fast-track procedure, and approved
+            as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June 1998 approved the
+            second edition of ECMA-262 to keep
+            it fully aligned with ISO/IEC 16262. Changes between the first and the second edition are editorial in
+            nature.</p>
+
+        <p>The third edition of the Standard introduced powerful regular expressions, better string handling, new
+            control statements, try/catch exception handling, tighter definition of errors, formatting for numeric
+            output and minor changes in anticipation
+            of forthcoming internationalisation facilities and future language growth. The third edition of the
+            ECMAScript standard was adopted by the Ecma General Assembly of December 1999 and published as ISO/IEC
+            16262:2002 in June 2002.</p>
+
+    </div>
+
+    <script>
+        let div = document.querySelector('#example')
+        //1.判断div盒子的滚动条是否到达底部
+        div.addEventListener('scroll',function () {
+           let scrollTop = div.scrollTop
+           let divHeight = div.clientHeight
+           let scrollHeight = div.scrollHeight
+           console.log(scrollTop,divHeight,scrollHeight)
+           if (scrollTop + divHeight === scrollHeight) {
+               alert('你已经到达底部了哦')
+           }
+        })
+
+       
+        let html = document.documentElement
+        // console.log(html.offsetHeight)  //html元素总高度
+        // console.log(html.scrollTop) //html元素距离顶部移动的距离
+        // console.log(html.scrollHeight)  //html元素内容区域的完整内部高度，包括滚动部分。
+
+        //2.判断滚动条是否到达底部
+        // window.addEventListener('scroll',function () {
+        //     console.log(html.clientHeight)
+        //     console.log(html.scrollTop)
+        //     console.log(html.scrollHeight)
+        //     if (html.scrollTop + html.clientHeight === html.scrollHeight) {
+        //         alert('已经到底了')
+        //     }
+        // })
+
+        //3.将小球方在有效范围中心 看第18个文件
+
+        //4.不同点:getComputedStyle(elem).width与elem.clientWidth之间的差别在哪里？
+        //4.1 clientWidth 值是数值，然而 getComputedStyle(elem).width 返回一个包含 px 的字符串.
+        //4.2 etComputedStyle 可能返回非数值的结果，例如内联元素的 "auto"。
+        //4.3 clientWidth 是元素的内部内容区域加上内间距，而 CSS 宽度（具有标准的 box-sizing）是内部不包括内间距的空间区域。
+        //4.4 如果有一个滚动条，一般浏览器保留它的空间，有的浏览器从 CSS 宽度中减去这个空间（因为它不
+        //    再用于内容），而有些则不这样做。clientWidth 属性总是相同的：如果保留了滚动条，那么它的宽度将被删去。
+    </script>
+</body>
+
+</html>

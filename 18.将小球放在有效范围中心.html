@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #field {
+            width: 200px;
+            border: 10px groove black;
+            background-color: #00FF00;
+            position: relative;
+        }
+
+        #ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            /* padding: 10px; */
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="field">
+        <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . .
+    </div>
+
+    <script>
+        //注意：当浏览器还不知道图片的宽/高（图片的尺寸可能来自标签属性或 CSS）的时候它会假设它们的尺寸为 0直到图片加载完成。
+        //实际使用过程中，浏览器会在图片第一次加载完成后缓存该图片，方便下次再次访问时立即显示图片。
+        //但是在第一次加载时 ball.offsetWidth 的值为 0，这会导致错误的坐标出现。
+        //此时我们应该为 <img> 添加 width/height 属性：
+
+        let field = document.querySelector('#field')
+        let ball = document.getElementById('ball')
+        let fieldTotalWidth = field.clientWidth
+        let fieldTotalHeight = field.clientHeight
+        let ballTotalWidth = ball.offsetWidth
+        let ballTotalHeight = ball.offsetHeight
+        //或者用getComputedStyle属性来获取
+        // let ballTotalWidth = getComputedStyle(ball).width
+        // let ballTotalHeight = getComputedStyle(ball).height
+        console.log(fieldTotalWidth, fieldTotalHeight)
+        console.log(ballTotalWidth, ballTotalHeight)
+
+        ball.style.left = fieldTotalWidth/2  - ballTotalWidth/2 + 'px'
+        ball.style.top = fieldTotalHeight/2 - ballTotalHeight/2 + 'px'
+        // console.log(getComputedStyle(ball).width,getComputedStyle(ball).height) //40px 40px
+    </script>
+
+</body>
+
+</html>
