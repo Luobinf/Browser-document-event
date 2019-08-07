@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览器事件简介</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,body {
+            height: 1600px;
+        }
+        .box1 {
+            border: 1px solid red;
+            width: 200px;
+            height: 200px;
+        }
+        .box2 {
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+            margin: 50px auto;
+        }
+        input {
+            width: 100px;
+            transition: width 1s;
+        }
+        .wide {
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <div class="box2"></div>
+    </div>
+    <input type="button" value="点我" class="btn">
+    <ul class="news">
+        <li>1.楼市降价</li>
+        <li>2.港独分子</li>
+        <li>3.全球贸易</li>
+    </ul>
+    <script>
+        //1.鼠标事件：mousemove，当鼠标在元素上移动时该事件会被触发。
+        //mouseover/mouseout/click/dblclick/click
+        let oBox = document.querySelector('.box1')
+        let oBox2 = document.querySelector('.box2')
+        // oBox.addEventListener('mousemove',function () {
+        //     console.log('nihao')
+        // })
+        // oBox.addEventListener('mouseover', function () {
+        //     console.log('1我进去了')
+        // })
+        // oBox.addEventListener('mouseout', function () {
+        //     console.log('2我出来了')
+        // })
+        // oBox.addEventListener('mouseenter', function () {
+        //     console.log('go in box')
+        // })
+        // oBox2.addEventListener('mouseenter', function () {
+        //     console.log('go in box2')
+        // })
+
+        //注意：mouseenter事件与mouseover事件的区别
+        //当鼠标进入元素时就会触发mouseenter事件，但是与mouseover相比该事件不会冒泡。看下面例子：
+        //具体差别可看MDN。https://developer.mozilla.org/zh-CN/docs/Web/API/Element/mouseenter_event
+        // oBox.addEventListener('mouseover',function () {
+        //     console.log('box')
+        // })
+        // oBox2.addEventListener('mouseover',function () {
+        //     console.log('box2')
+        // })
+    
+        //注意：mouseenter的对称事件mouseleave
+        //当鼠标离开元素时就会触发mouseleave事件，同样mouseleave与mouseout事件也是相似的，但是两种
+        //的区别在于mouseleave不会发生冒泡而mouseout事件会冒泡。
+        //这意味着当指针离开元素及其所有后代时，会触发mouseleave，而当指针离开元素或离开
+        //元素的后代（即使指针仍在元素内）时，会触发mouseout。看下面例子：
+        // oBox.addEventListener('mouseleave', function () {
+        //     console.log('leave box')
+        // })
+        // oBox2.addEventListener('mouseleave', function () {
+        //     console.log('leave box2')
+        // })
+
+        // oBox.addEventListener('mouseout', function () {
+        //     console.log('leave box')
+        // })
+        // oBox2.addEventListener('mouseout', function () {
+        //     console.log('leave box2')
+        // })
+        
+        //2.有些事件处理器只能通过addEventListener来设置,例如transitionend
+            let btn = document.querySelector('.btn')
+            // btn.onclick = function () {
+            //     btn.classList.toggle('wide')
+            // }
+            // btn.addEventListener('click', function () {
+            //     btn.classList.toggle('wide')
+            // })
+
+            //3.事件对象
+            //为了正确处理事件，我们需要知道更多关于事件内容的细节。不仅仅是 “click” 或者 “keypress”，
+            //而是指针坐标在哪而？哪个键被按了？等等。
+            //当事件发生时，浏览器会创建一个事件对象，将信息放入其中，并将其作为参数传入处理器。
+            //例如下述例子:
+            btn.addEventListener('click',function (event) {
+                console.log(event.type,event.target)  //获取事件类型、事件元素
+                console.log(event.currentTarget)
+                console.log(event.clientX,event.clientY)
+            })
+            //3.1 event.type 事件类型，这里是‘click’
+            //3.2 event.currentTarget 处理事件的元素,它总是指向事件绑定的元素，类似于this
+            //而event.target则总是指向事件触发的元素。
+            //例如：下面就可以看到两者的区别了
+            let news = document.querySelector('.news')
+            news.addEventListener('click', function (ev) {
+                console.log(ev.target)  //事件触发的元素
+                console.log(ev.currentTarget)   //事件所绑定的元素,类似于this
+                console.log(ev.clientX,ev.clientY)
+            })
+
+            //3.3 event.clientX / event.clientY 鼠标事件中光标相对于窗口的坐标
+
+    </script>
+</body>
+</html>

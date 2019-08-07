@@ -7,31 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>创建一个彩色时钟</title>
     <style>
-        .red {
+        header .clock {
+            width: 150px;
+            margin: 100px auto;
+        }
+
+        header .clock #hour {
             color: red;
         }
 
-        .green {
+        header .clock #minute {
             color: green;
         }
 
-        .blue {
+        header .clock #second {
             color: blue;
-        }
-
-        .clock {
-            width: 150px;
-            margin: 100px auto;
         }
     </style>
 </head>
 
 <body>
-    <div class="clock">
-        <span id="hour" class="red"></span>
-        <span id="minute" class="green"></span>
-        <span id="second" class="blue"></span>
-    </div>
+    <header>
+        <div class="clock">
+            <span id="hour" class="red"></span>
+            <span id="minute" class="green"></span>
+            <span id="second" class="blue"></span>
+        </div>
+    </header>
     <script>
         function update() {
             let clock = document.querySelector('.clock')
@@ -61,8 +63,8 @@
             }
             clock.children[2].textContent = seconds;
         }
-        
-        function createClock () {
+
+        function createClock() {
             update() //*
             setInterval(update, 1000);
         }
