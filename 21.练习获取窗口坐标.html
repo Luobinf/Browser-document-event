@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>窗口坐标和元素坐标</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 20px 0 0 20px;
+            cursor: pointer;
+        }
+
+        #field {
+            overflow: hidden;
+            width: 200px;
+            height: 150px;
+            border-top: 10px solid black;
+            border-right: 10px solid gray;
+            border-bottom: 10px solid gray;
+            border-left: 10px solid black;
+            background-color: #00FF00;
+            font: 10px/1.2 monospace;
+        }
+
+        .triangle-right {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 20px solid red;
+            text-indent: -20px;
+            font: 12px/1 monospace;
+        }
+    </style>
+</head>
+
+<body>
+        Click anywhere to get window coordinates.
+        That's for testing, to check the result you get by JavaScript. 
+    <div id="field"></div>
+    <script>
+        //一。获取窗口坐标
+        let field = document.getElementById('field')
+        let obj = field.getBoundingClientRect()
+        console.log(obj.left,obj.top)   //左上的外角坐标
+        console.log(obj.right,obj.bottom)   //右下的外角坐标
+        
+        let clientWidth = field.clientWidth
+        let clientHeight = field.clientHeight
+        let offsetWidth = field.offsetWidth
+        let offsetHeight = field.offsetHeight
+        let borderLeft = (offsetWidth - clientWidth) / 2
+        let borderTop = (offsetHeight - clientHeight) / 2
+        console.log(obj.left + borderLeft,obj.top + borderTop)  //左上内角坐标
+        console.log(obj.left+field.clientLeft,obj.top+field.clientTop)  //也可以获取左上内角坐标
+        console.log(obj.right-borderLeft,obj.bottom - borderTop)    //右下内角坐标(当四边的border宽度都一样时可以采用这种方式) 230 201
+        let x = obj.right-(field.offsetWidth-field.clientLeft-field.clientWidth)
+        let y = obj.bottom - (field.offsetHeight - field.clientTop - field.clientHeight)
+        console.log(x,y)   //右下内角坐标 230 201
+        //右下内角的坐标还可以使用这种方式来获取
+        let answer4 = [
+            obj.right - parseInt(getComputedStyle(field).borderRightWidth),
+            obj.bottom - parseInt(getComputedStyle(field).borderBottomWidth)
+        ]
+        console.log(getComputedStyle(field).borderRightWidth)   //得到的是字符串形式 10px
+        console.log(answer4[0],answer4[1])  //获取到右下内角坐标 230 201
+    </script>
+</body>
+
+</html>

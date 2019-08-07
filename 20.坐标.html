@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>坐标</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,body {
+            height: 2000px;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        //大多数JavaScript方法处理的是以下两种坐标系中的一个：
+        //1.相对于窗口（或者另一个 viewport）顶部/左侧计算的坐标
+        //2.相对于文档顶部/左侧计算的坐标
+
+        //一.窗口坐标:getBoundingClientRect
+        //窗口的坐标是从窗口的左上角开始计算的。
+        //elem.getBoundingClientRect() 方法返回一个 elem 的窗口坐标对象，这个对象有以下这些属性：
+        let obj = box.getBoundingClientRect()
+        console.log(obj)
+        let centerX = document.documentElement.clientWidth / 2
+        let centerY = document.documentElement.clientHeight / 2
+        let elem = document.elementFromPoint(centerX,centerY)
+        console.log(elem.tagName)
+        console.log(elem)
+
+        //二.获取文档坐标
+        //现在 Javascript 中并没有获取一个元素文档坐标的标准方法。但是这个方法写起来很容易。
+        function getCoords (elem) {
+            let obj = elem.getBoundingClientRect()
+            return {
+                left: obj.left + window.pageXOffset,
+                top: obj.top + window.pageYOffset
+            } 
+        }
+        let oDiv = document.querySelector('#box')
+        window.addEventListener('scroll',function () {
+            let message = getCoords(oDiv)
+            oDiv.style.left = message.left
+            oDiv.style.position.top = message.top
+            console.log(message.left)
+            console.log(message.top)
+    
+        })
+
+        //https://zh.javascript.info/coordinates#tasks这里面的任务好好做做
+        
+    </script>
+</body>
+</html>

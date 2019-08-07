@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在元素旁边显示一个注释(绝对位置)</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+       
+        html,body {
+            height: 2000px;
+        }
+        html {
+            position: relative;
+        }
+        span {
+            border: 1px solid gray;
+            position: absolute;
+            background-color: aliceblue;
+            font: italic 16px serif;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 修改先前任务 的解决方案，从而让注释元素使用 position:absolute 而不是 position:fixed 样式。 -->
+    <!-- 当页面滚动时，这可以防止注释从元素旁边“逃离”。-->
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit sint atque dolorum fuga ad incidunt
+        voluptatum error fugiat animi amet! Odio temporibus nulla id unde quaerat dignissimos enim nisi rem provident
+        molestias sit tempore omnis recusandae
+        esse sequi officia sapiente.</p>
+
+    <blockquote>
+        Teacher: Why are you late?
+        Student: There was a man who lost a hundred dollar bill.
+        Teacher: That's nice. Were you helping him look for it?
+        Student: No. I was standing on it.
+    </blockquote>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit sint atque dolorum fuga ad incidunt
+        voluptatum error fugiat animi amet! Odio temporibus nulla id unde quaerat dignissimos enim nisi rem provident
+        molestias sit tempore omnis recusandae
+        esse sequi officia sapiente.</p>
+
+    <script>
+        function getCoords(elem) {
+            let box = elem.getBoundingClientRect();
+            // console.log(box.top,window.pageYOffset)
+            console.log(box.left)
+            return {
+                top: box.top + window.pageYOffset,
+                left: box.left + window.pageXOffset
+            };
+        }
+
+        function positionAt(anchor, position, elem) {
+            let anchorCoords = getCoords(anchor)
+            switch (position) {
+                case "top":
+                    elem.style.left = anchorCoords.left + 'px'
+                    elem.style.top = anchorCoords.top - elem.offsetHeight + 'px'
+                    break
+                case "right":
+                    elem.style.left = anchorCoords.left + anchor.offsetWidth + 'px'
+                    elem.style.top = anchorCoords.top + 'px'
+                    break
+                case "bottom":
+                    elem.style.left = anchorCoords.left + 'px'
+                    elem.style.top = anchorCoords.top + anchor.offsetHeight + 'px'
+                    break
+            }
+        }
+
+        function showNote(anchor, position, text) {
+            let elem = document.createElement('span')
+            elem.innerHTML = text
+            document.body.append(elem)
+            positionAt(anchor, position, elem)
+        }
+        let blockquote = document.querySelector('blockquote');
+
+        showNote(blockquote, "top", "note above");
+        showNote(blockquote, "right", "note at the right");
+        showNote(blockquote, "bottom", "note below");
+
+        // 或者加上下面window的滚动事件也可以
+        // window.addEventListener('scroll', function () {
+        //     showNote(blockquote, "top", "note above");
+        //     showNote(blockquote, "right", "note at the right");
+        //     showNote(blockquote, "bottom", "note below");
+        // })
+    </script>
+</body>
+
+</html>
