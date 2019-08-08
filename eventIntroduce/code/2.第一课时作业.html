@@ -10,13 +10,37 @@
         .noshow {
             display: none;
         }
+        html,body {
+            height: 2000px;
+        }
+        #field {
+            width: 200px;
+            height: 150px;
+            border: 10px solid black;
+            background-color: #00FF00;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin: 100px auto;
+        }
+        #ball {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            transition: all 1s;
+        }
     </style>
 </head>
 
 <body>
     <button>点击隐藏文本</button>
     <div id="text">text</div>
-
+    <div id="field">
+        <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      </div>
     <script>
         //1.单击按钮文本消失，再单击文本显示
         let text = document.querySelector('#text')
@@ -25,11 +49,11 @@
             text.classList.toggle('noshow')
         })
         //2.单击按钮自己消失
-        button.addEventListener('click', function (event) {
-            // this.style.display = 'none'
-            //或者使用event.currentTarget
-            event.currentTarget.style.display = 'none'
-        })
+        // button.addEventListener('click', function (event) {
+        //     // this.style.display = 'none'
+        //     //或者使用event.currentTarget
+        //     event.currentTarget.style.display = 'none'
+        // })
 
         function handler() {
             alert(1);
@@ -37,6 +61,45 @@
 
         button.addEventListener("click", handler);
         button.removeEventListener("click", handler);  //这里当点击按钮时会移除handler事件处理函数
+    
+        //3.单击一下让球在球场中移动 球的中心应该准确的在单击时指针位置的下方(如果可能的话，不越过球场边缘)。
+        let field = document.querySelector('#field')
+        let ball = document.querySelector('#ball')
+
+        field.addEventListener('click', function (event) {
+            let fieldCoords = this.getBoundingClientRect()
+            //当点击field区域时，球的中心落在单击时指针位置的下方 此时可以看到border的上边界为-30px了
+            let ballCoords = {
+                left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2,
+                top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2
+            }
+
+            //3.1使小球不超过上边界
+            if (ballCoords.top < 0) {
+                ballCoords.top = 0
+            }
+            //3.2使小球不超过左边界
+            if (ballCoords.left < 0) {
+                ballCoords.left = 0
+            }
+            //3.3使小球不超过下边界
+            if (ballCoords.top > field.clientHeight - ball.clientHeight) {
+                ballCoords.top = field.clientHeight - ball.clientHeight
+            }
+            //3.4使小球不超过右边界
+            if (ballCoords.left > field.clientWidth - ball.clientWidth) {
+                ballCoords.left = field.clientWidth - ball.clientWidth
+            }
+            // console.log(ballCoords.top)
+            // console.log(ballCoords.left) 
+            ball.style.left = ballCoords.left + 'px'
+            ball.style.top = ballCoords.top + 'px'
+        })
+
+
+        //4.创建滑动菜单
+        //创建一个在单击时打开/折叠的菜单：
+        
     </script>
 </body>
 

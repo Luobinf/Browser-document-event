@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建滑动菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol {
+            list-style: none;
+        }
+        .menu {
+            margin-left: 100px;
+            margin-top: 100px;
+            margin-right: 100px;
+            border: 1px solid red;
+        }
+        .menu .title {
+            display: inline-block;
+            font-size: 18px;
+            line-height: 22px;
+            padding: 3px;
+            cursor: pointer;
+           
+        }
+        .menu .title::before {
+            content: '▶';
+            color: green;
+            /* font-size: 80%; */
+        }
+        .menu ul {
+            display: none;
+            margin-left: 26px;
+        }
+        .menu.open ul{
+            display: block;
+        }
+        .menu.open .title::before {
+            content: '▼ ';
+            color: green;    
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <span class="title">Sweeties (click me)!</span>
+        <ul>
+            <li>Cake</li>
+            <li>Donut</li>
+            <li>Honey</li>
+        </ul>
+    </div>
+    <script>
+        //4.创建滑动菜单
+        //创建一个在单击时打开/折叠的菜单：两个箭头用伪元素就可以了
+        let menu = document.querySelector('.menu')
+        let title = document.querySelector('.title')
+        let ul = document.querySelector('.menu ul')
+        title.addEventListener('click', function (event) {
+            // ul.classList.toggle('open')
+            menu.classList.toggle('open')
+        })
+
+        //5.添加关闭按钮
+    </script>
+</body>
+</html>

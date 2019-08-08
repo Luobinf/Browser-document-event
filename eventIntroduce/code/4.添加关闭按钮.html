@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加关闭按钮</title>
+    <style>
+        body {
+            margin: 10px auto;
+            width: 470px;
+        }
+
+        h3 {
+            margin: 0;
+            padding-bottom: .3em;
+            font-size: 1.1em;
+        }
+
+        p {
+            margin: 0;
+            padding: 0 0 .5em;
+        }
+
+        .pane {
+            background: #edf5e1;
+            padding: 10px 20px 10px;
+            border-top: solid 2px #c4df9b;
+            position: relative;
+            display: block;
+        }
+        .pane.close {
+            display: none;
+        }
+        .remove-button {
+            font-size: 110%;
+            color: darkred;
+            width: 24px;
+            height: 24px;
+            border: none;
+            outline: none;
+            background: transparent;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="remove-button">[x]</button>
+
+    <div>
+        <div class="pane">
+            <h3>Horse</h3>
+            <!-- <button class="remove-button">[x]</button> -->
+            <p>The horse is one of two extant subspecies of Equus ferus. It is an odd-toed ungulate mammal belonging to
+                the taxonomic family Equidae. The horse has evolved over the past 45 to 55 million years from a small
+                multi-toed creature, Eohippus, into the large, single-toed animal of today.</p>
+        </div>
+        <div class="pane">
+            <h3>Donkey</h3>
+            <!-- <button class="remove-button">[x]</button> -->
+            <p>The donkey or ass (Equus africanus asinus) is a domesticated member of the horse family, Equidae. The
+                wild ancestor of the donkey is the African wild ass, E. africanus. The donkey has been used as a working
+                animal for at least 5000 years.</p>
+        </div>
+        <div class="pane">
+            <h3>Cat</h3>
+            <!-- <button class="remove-button">[x]</button> -->
+            <p>The domestic cat (Latin: Felis catus) is a small, typically furry, carnivorous mammal. They are often
+                called house cats when kept as indoor pets or simply cats when there is no need to distinguish them from
+                other felids and felines. Cats are often valued by humans for companionship and for their ability to
+                hunt vermin.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        //5.添加关闭按钮
+        //有一张消息列表。使用 JavaScript 在每条消息的右上角都添加一个按钮。
+        //5.1第一种方法
+        // let button = document.getElementsByTagName('button')
+        // let pane = document.querySelectorAll('.pane')
+        // for (let j=0;j<button.length;j++) {
+        //     button[j].style.right = '4px';
+        //     button[j].style.top = '0px';
+        //     button[j].addEventListener('click',function (event) {
+        //         pane[j].classList.add('close')
+        //     })
+        // }
+        
+        //5.2第二种方法(这种方法更好)
+        //element.insertAdjacentHTML() 将指定的文本解析为HTML或XML元素，并将结果节点插入到DOM树中的指定位置。
+        //element.insertAdjacentHTML(position, text);position是相对于元素的位置，并且必须是以下字符串之一：
+        //'beforeBegin'/'afterBegin'/'beforEend'/'afterEnd',具体可见MDN.
+        //text是要被解析为HTML或XML元素,并插入到DOM树中的指定位置。
+        
+        let button = document.querySelector('.remove-button')
+        let panes = document.querySelectorAll('.pane')
+        for(let pane of panes) {
+            pane.insertAdjacentHTML(`afterBegin`,`<button class="remove-button">[x]</button>`)
+            pane.firstChild.addEventListener('click', function () {
+                // pane.classList.add('close')
+                //或者用下面这种方式
+                this.parentElement.remove()
+                // console.log(this.parentElement)
+            })
+        }
+    </script>
+</body>
+
+</html>

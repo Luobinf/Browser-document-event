@@ -111,7 +111,7 @@
             btn.addEventListener('click',function (event) {
                 console.log(event.type,event.target)  //获取事件类型、事件元素
                 console.log(event.currentTarget)
-                console.log(event.clientX,event.clientY)
+                console.log(event.clientX,event.clientY)//鼠标事件中光标相对于窗口的坐标。
             })
             //3.1 event.type 事件类型，这里是‘click’
             //3.2 event.currentTarget 处理事件的元素,它总是指向事件绑定的元素，类似于this
