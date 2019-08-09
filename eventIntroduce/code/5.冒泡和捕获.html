@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>冒泡和捕获</title>
+    <style>
+        div {
+            width: 300px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <em class="message">If you click on <code>EM</code>, the handler on <code>DIV</code> runs.</em>
+    </div>
+    <script>
+    
+        //需要掌握的知识点：什么是冒泡、event.target是什么、如何阻止冒泡、什么是捕获
+        //1.停止冒泡
+        //可以使用event.stopPropagation()
+        let parent = document.querySelector('.parent')
+        let message = document.querySelector('.message')
+        parent.addEventListener('click', function (ev) {
+            alert('parent')
+        })
+        message.addEventListener('click', function (ev) {
+            alert('message')
+            //如果从这里阻止事件冒泡的话，那么当事件发生在该元素上时，其事件不会再向
+            //父元素传播了。
+            ev.stopPropagation()
+        })
+        //如果元素在事件上有多个处理器，那么即使其中一个事件处理函数停止冒泡，其他事件处理函数也会继续执行。
+        //换句话说，event.stopPropagation() 停止向上移动，但是当前元素上的其他事件处理函数都会继续运行。
+        //为了停止事件冒泡并阻止当前元素上的事件处理函数运行，有一个 event.stopImmediatePropagation() 方法。使用之后，其他处理器就不会被执行。
+        console.log(document.querySelectorAll('*'))
+    </script>
+</body>
+
+</html>
