@@ -23,6 +23,10 @@
         //需要掌握的知识点：什么是冒泡、event.target是什么、如何阻止冒泡、什么是捕获
         //1.停止冒泡
         //可以使用event.stopPropagation()
+        //如果在元素上有多个事件处理函数，那么即使其中一个事件处理函数停止冒泡，
+        //其它事件处理函数也会继续运行。为了停止事件冒泡并阻止当前元素上的事件处理函数
+        //运行，可以使用event.stopImmediatePropagation()方法。使用之后，其他处理器就不会被执行。
+       
         let parent = document.querySelector('.parent')
         let message = document.querySelector('.message')
         parent.addEventListener('click', function (ev) {
@@ -38,6 +42,8 @@
         //换句话说，event.stopPropagation() 停止向上移动，但是当前元素上的其他事件处理函数都会继续运行。
         //为了停止事件冒泡并阻止当前元素上的事件处理函数运行，有一个 event.stopImmediatePropagation() 方法。使用之后，其他处理器就不会被执行。
         console.log(document.querySelectorAll('*'))
+
+        //2.事件传播的三个阶段：捕获阶段、目标阶段、冒泡阶段
     </script>
 </body>
 
