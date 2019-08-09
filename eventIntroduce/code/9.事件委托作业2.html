@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件委托作业2</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-left: 100px;
+        }
+
+        td,
+        th {
+            border: 1px solid red;
+            padding: 5px;
+        }
+
+        th {
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="grid">
+        <thead>
+            <tr>
+                <th data-type="number">年龄</th>
+                <th data-type="string">姓名</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>5</td>
+                <td>John</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Pete</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Ann</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Eugene</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Ilya</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        //ageArr数组用来存放年龄，nameArr数组用来存放姓名
+        // let ageArr = []
+        // let nameArr = []
+        // let trsFirstChild = document.querySelectorAll('tbody tr td')
+        // for (let [index, value] of Array.from(trsFirstChild).entries()) {
+        //     console.log(index, value)
+        //     if (index % 2 === 0) {
+        //         ageArr.push(parseInt(value.innerHTML))
+        //     } else {
+        //         nameArr.push(value.innerHTML)
+        //     }
+        // }
+        // console.log(ageArr, nameArr)
+
+        grid.onclick = function (ev) {
+            if (ev.target.tagName != 'TH') return
+            let th = ev.target
+            // if TH, then sort
+            // cellIndex is the number of th: cellIndex表示的是单元格是第几列的
+            //   0 for the first column
+            //   1 for the second column, etc
+            sortGrid(th.cellIndex, th.dataset.type)
+            // console.log(th.cellIndex,th.dataset.type)
+        }
+
+        function sortGrid(colNum, type) {
+            let tbody = grid.querySelector('tbody')
+            let rowsArray = Array.from(tbody.rows) //tbody.rows是类数组对象
+            // console.log(rowsArray)
+
+            switch (type) {
+                case "number":
+                   rowsArray.sort(function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML
+                    })
+                    tbody.append(...rowsArray)
+                    break;
+
+                case "string":
+                    rowsArray.sort(function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1
+                    })
+                    tbody.append(...rowsArray)
+                    break;
+            }
+
+        }
+
+        // let tbody = grid.querySelector('tbody')
+        // console.log(tbody.rows[0])
+        // console.log(tbody.rows[1])
+
+    </script>
+</body>
+
+</html>

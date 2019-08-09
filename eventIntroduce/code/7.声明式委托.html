@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    Counter: <input type="button" value="1" data-counter>
+    One more counter: <input type="button" value="2" data-counter>
+    <button data-toggle-id="subscribe-mail">
+        Show the subscription form
+    </button>
+
+    <form id="subscribe-mail" hidden>
+        Your mail: <input type="email">
+    </form>
+    <script>
+        //1.我们还可以使用事件委托声明式地通过特定属性和类为元素添加“行为”。
+        //模式分为两步：
+        //1.1我们向元素添加一个特殊属性。
+        //1.2用文档范围级的处理器追踪事件，如果事件发生在具有特定属性的元素上 —— 则执行该操作。
+        // document.addEventListener('click', function (ev) {
+        //     //如果属性存在则做下列操作,否则什么也不做
+        //     if (ev.target.dataset.counter != undefined) {
+        //         ev.target.value++
+        //     }
+        // })
+
+        //2.再举一个例子，单击一个具有 data-toggle-id 属性的元素将显示/隐藏具有给定 id 的元素
+        document.addEventListener('click', function (event) {
+            let id = event.target.dataset.toggleId;
+            console.log(id)
+            if (!id) return;
+
+            let elem = document.getElementById(id);
+
+            elem.hidden = !elem.hidden;
+        });
+        //让我们再一次指出我们做了什么。现在，要将切换功能添加到元素中 —— 不需要了解 JavaScript，只需要使用 data-toggle-id 属性。
+        //这可能变得非常方便 —— 不需要为每个这样的元素编写 JavaScript。只需要使用行为。文档级处理器使其可以用于页面的任何元素。
+    
+        //3.总结:   事件委托真的很酷！这是 DOM 事件最有用的模式之一。
+        //它通常用于为许多相似的元素添加相同的处理，但不仅仅只是这样。
+        //处理步骤:
+        //3.1.在容器上设置一个处理器。
+        //3.2在容器上设置一个处理器。
+        //3.3如果事件发生在我们感兴趣的元素中，那么处理该事件。
+
+        //好处：1.简化初始化并节省内存：不需要添加许多事件处理函数，函数也是一种对象，
+        //若给每一个元素都添加内存消耗会很严重。
+        //2.更少的代码：添加或移除元素时，不需要添加/移除处理器。
+        //3.DOM修改：我们可以使用 innerHTML 等来大量添加/移除元素。
+        //4.当动态的添加元素后，不需要再添加事件处理函数了。
+
+     
+    </script>
+</body>
+
+</html>
