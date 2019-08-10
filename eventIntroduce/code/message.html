@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>message</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            height: 2000px;
+        }
+        .message-wrapper {
+            margin: 100px;
+        }
+        .contentWrapper {
+            width: 300px;
+            height: 150px;
+            border: 1px solid red;
+            /* 超出部分被隐藏的元素其自身的宽高还是能准确获取的(elem.offsetHeight/offsetWidth) */
+            overflow: hidden;
+        }
+        body {
+            position: relative;
+        }
+        .message {
+            position: absolute;
+            color: skyblue;
+            font-size: 16px;
+            line-height: 18px;
+            padding: 2px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <button class="message-wrapper">😄</button>
+    <div class="contentWrapper">
+        <p id="content">
+            ********************************************************
+            ********************************************************
+            *******************************************************
+            *******************************************************
+            *******************************************************
+            *******************************************************
+            *******************************************************
+            *******************************************************
+            *******************************************************
+        </p>
+    </div>
+    <script>
+        //1.消息框是相对于窗口定位的,当有滚动条并且移动滚动条时，消息会与按钮脱离。
+        //因为此时的消息是固定定位的，并且函数只调用了一次，即窗口坐标一直是一开始的值
+        //（即使滑动了滚动条也还是一开始的值）。故消息框不会跟随按钮移动。
+        //如果要改变这个状况，我们需要使用基于文档的坐标和 position:absolute样式。
+        // let messageWrapper = document.querySelector('.message-wrapper')
+        // function createMessageFrame (elem,html) {
+        //     let message = document.createElement('div')
+        //     message.style.cssText = "position:fixed;color:skyblue;"
+        //     message.innerHTML = html
+        //     let elemCoords = elem.getBoundingClientRect() 
+        //     message.style.left = elemCoords.left + 'px'
+        //     message.style.top = elemCoords.bottom + 'px'
+        //     console.log(elemCoords.left,elemCoords.bottom)
+        //     document.body.append(message)
+        // }
+        // createMessageFrame(messageWrapper,'我是消息提示框')
+
+        //2.注意：display为none和hidden的元素其宽高是获取不到的，无法使用几何属性。
+
+        //3.采用position：absolute和基于文档坐标可以解决上述1的问题
+        let messageWrapper = document.querySelector('.message-wrapper')
+        function createMessageFrame (elem,html) {
+            let message = document.createElement('div')
+            message.className = 'message'
+            message.innerHTML = html
+            let coords = elem.getBoundingClientRect()
+            message.style.left = coords.left  + window.pageXOffset + 'px'
+            message.style.top = coords.bottom + window.pageYOffset + 'px'
+            document.body.append(message)
+            console.log(coords.bottom,  window.pageYOffset)
+        }
+        createMessageFrame(messageWrapper,'我是消息提示框')
+    </script>
+</body>
+</html>

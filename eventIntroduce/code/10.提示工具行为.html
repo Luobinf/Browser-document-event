@@ -57,7 +57,8 @@
     <script>
 
         //为提示工具行为编写 JavaScript 代码。
-        //当鼠标移入带有 data-tooltip 的元素时,提示工具应该出现在它上面，移出时则隐藏起来
+        //当鼠标移入带有 data-tooltip 的元素时,提示工具应该出现在它上面，移出时则隐藏起来.
+        //这里巧妙的用到了data-属性，和获取这类以data-开头的属性的内容的属性dataset.
         let tooltipElem
         document.onmouseover = function (event) {
             let target = event.target
