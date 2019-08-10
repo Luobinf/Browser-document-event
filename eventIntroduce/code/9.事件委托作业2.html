@@ -61,34 +61,17 @@
     </table>
 
     <script>
-        //ageArr数组用来存放年龄，nameArr数组用来存放姓名
-        // let ageArr = []
-        // let nameArr = []
-        // let trsFirstChild = document.querySelectorAll('tbody tr td')
-        // for (let [index, value] of Array.from(trsFirstChild).entries()) {
-        //     console.log(index, value)
-        //     if (index % 2 === 0) {
-        //         ageArr.push(parseInt(value.innerHTML))
-        //     } else {
-        //         nameArr.push(value.innerHTML)
-        //     }
-        // }
-        // console.log(ageArr, nameArr)
-
         grid.onclick = function (ev) {
             if (ev.target.tagName != 'TH') return
             let th = ev.target
-            // if TH, then sort
-            // cellIndex is the number of th: cellIndex表示的是单元格是第几列的
-            //   0 for the first column
-            //   1 for the second column, etc
-            sortGrid(th.cellIndex, th.dataset.type)
+            //cellIndex表示的是单元格是第几列：例如第0列、第1列...
             // console.log(th.cellIndex,th.dataset.type)
+            sortGrid(th.cellIndex, th.dataset.type)
         }
 
         function sortGrid(colNum, type) {
             let tbody = grid.querySelector('tbody')
-            let rowsArray = Array.from(tbody.rows) //tbody.rows是类数组对象
+            let rowsArray = Array.from(tbody.rows)
             // console.log(rowsArray)
 
             switch (type) {
@@ -96,6 +79,7 @@
                    rowsArray.sort(function (rowA, rowB) {
                         return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML
                     })
+                    console.log(rowsArray)
                     tbody.append(...rowsArray)
                     break;
 
@@ -108,10 +92,6 @@
             }
 
         }
-
-        // let tbody = grid.querySelector('tbody')
-        // console.log(tbody.rows[0])
-        // console.log(tbody.rows[1])
 
     </script>
 </body>
