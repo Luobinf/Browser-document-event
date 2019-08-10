@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>创建滑动菜单</title>
+    <title>创建下拉菜单</title>
     <style>
         * {
             margin: 0;
@@ -13,41 +13,74 @@
         ul,ol {
             list-style: none;
         }
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
         .menu {
             margin-left: 100px;
             margin-top: 100px;
             margin-right: 100px;
-            border: 1px solid red;
         }
         .menu .title {
-            display: inline-block;
+            /* display: inline-block; */
             font-size: 18px;
             line-height: 22px;
             padding: 3px;
             cursor: pointer;
+            float: left;
            
         }
-        .menu .title::before {
+        .menu .title-wrapper {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #cccccc;
+            border-bottom: 1px solid #cccccc;
+            padding-left: 20px;
+        }
+        .menu .title-wrapper:hover {
+            background-color: skyblue;
+            color: red;
+        }
+        .menu .title-wrapper::before {
             content: '▶';
             color: green;
+            /* display: inline-block; */
             /* font-size: 80%; */
+            height: 20px;
+            width: 20px;
+            float: left;
+        }
+        .menu .title-wrapper:hover::before {
+            content: '▶';
+            color: red;
         }
         .menu ul {
             display: none;
             margin-left: 26px;
         }
+        .menu.open .title-wrapper{
+            background-color: skyblue;
+            color: red;
+        }
+        .menu.open {
+            border-bottom: 1px solid #cccccc;
+        }
         .menu.open ul{
             display: block;
         }
-        .menu.open .title::before {
+        .menu.open .title-wrapper::before {
             content: '▼ ';
-            color: green;    
+            color: red;    
         }
     </style>
 </head>
 <body>
     <div class="menu">
-        <span class="title">Sweeties (click me)!</span>
+        <div class="title-wrapper clearfix">
+            <span class="title">Sweeties (click me)!</span>
+        </div>
         <ul>
             <li>Cake</li>
             <li>Donut</li>
@@ -58,9 +91,10 @@
         //4.创建滑动菜单
         //创建一个在单击时打开/折叠的菜单：两个箭头用伪元素就可以了
         let menu = document.querySelector('.menu')
+        let titleWrapper = document.querySelector('.title-wrapper')
         let title = document.querySelector('.title')
         let ul = document.querySelector('.menu ul')
-        title.addEventListener('click', function (event) {
+        titleWrapper.addEventListener('click', function (event) {
             // ul.classList.toggle('open')
             menu.classList.toggle('open')
         })
